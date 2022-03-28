@@ -181,23 +181,4 @@
 <!-- End 5th Product Slider -->
 
 
-<!-- 6th Product Slider -->
-<div class="mx-3" style="background-color:#87cefa">
-  <h2>Books</h2>
-
-  <!-- Slider 1 -->
-  <div class="owl-carousel" id="slider7">
-
-    {% for bb in books %}
-      <a href="{% url 'product-detail' bb.id %}" class="btn">
-        <div class="item"><img src="{{ bb.product_image.url }}" alt="" height="200px"><span class="fw-bold">ID: {{ b.id }} {{ bb.title }}</span><br><span class="fs-5">{{ bb.discounted_price }}</span></div>
-      </a>
-      {% comment %} ID: {{ b.id }} {% endcomment %}
-    {% endfor %}
-
-  </div>
-</div>
-<br><br>
-<!-- End 6th Product Slider -->
-
 {% endblock main-content %}
