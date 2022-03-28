@@ -47,16 +47,28 @@
           <input class="form-check-input" type="radio" name="custid" id="custadd{{ forloop.counter }}" value="{{ ad.id }}">
           <label class="form-check-label fw-bold" for="">Address: {{ forloop.counter }}</label>
         </div>
-
-        
         {% endfor %}
 
-        <div class="text-end">
-          {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button> {% endcomment %}
-          
-          <!-- Set up a container element for the button -->
-          <div id="paypal-button-container"></div>
-        </div>
+
+
+
+        {% comment %} != requset.user.address  {% endcomment %}
+
+        {% if not address %}   
+          <button><a href="{% url 'profile' %}">Add Address First</a></button>
+          <br><br>
+        
+        {% else %}
+
+          <div class="text-end">
+            {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button> {% endcomment %}
+            
+            <!-- Set up a container element for the button -->
+            <div id="paypal-button-container"></div>
+          </div>
+        {% endif %}
+
+
       </form>
     </div>
 

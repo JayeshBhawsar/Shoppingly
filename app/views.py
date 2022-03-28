@@ -18,9 +18,10 @@ class ProductView(View):
         mobiles = Product.objects.filter(category='M')
         laptops = Product.objects.filter(category='L')
         books = Product.objects.filter(category='B')
-        
+
         total_items = 0
         if request.user.is_authenticated:
+
             total_items = len(Cart.objects.filter(user=request.user))
 
         context = {'topwears': topwears, 'bottomwears': bottomwears, 'mobiles': mobiles, 'laptops': laptops, 'books': books,'total_items': total_items}
@@ -40,6 +41,7 @@ class ProductDetailView(View):
         if request.user.is_authenticated:
             total_items = len(Cart.objects.filter(user=request.user))
             item_already_in_cart = Cart.objects.filter(Q(product=product.id) & Q(user=request.user)).exists()
+            
 
         context = {'product': product, 'total_items': total_items, 'item_already_in_cart': item_already_in_cart}
         return render(request, 'app/productdetail.html', context)
@@ -328,11 +330,31 @@ class ProfileView(View):
         #### pass
         form = CustomerProfileForm()
         
-        context = {'form': form, 'active': 'btn-primary'}
+        total_items = 0       
+        if request.user.is_authenticated:
+            total_items = len(Cart.objects.filter(user=request.user))
+            
+            pre_customer = len(Customer.objects.filter(user=request.user))
+            #print('pre_customer', pre_customer)
+            
+
+            
+            if (pre_customer >= 1):
+                
+                # context = {'pre_customer': pre_customer, 'total_items': total_items}
+                # return render(request, 'app/home.html', context)
+                
+                return redirect('home')
+            
+                    
+        context = {'form': form, 'active': 'btn-primary','total_items': total_items}
         return render(request, 'app/profile.html', context)
+    
     
     def post(self, request):
         form = CustomerProfileForm(request.POST)
+        
+        total_item = 0
         if form.is_valid():
             user = request.user
             name = form.cleaned_data['name']
@@ -346,8 +368,12 @@ class ProfileView(View):
             
             messages.success(request, 'Congratulations !! Profile Updated Successfully')
             
-        context = {'form': form, 'active': 'btn-primary'}
-        return render(request, 'app/profile.html', context)
+            total_item = len(Cart.objects.filter(user=request.user))
+
+            
+            
+        context = {'form': form, 'active': 'btn-primary', 'total_items': total_item}
+        return render(request, 'app/home.html', context)
 
 
 
@@ -368,8 +394,10 @@ def address(request):
 
 @login_required
 def checkout(request):
-    user = request.user
+    user = request.user 
+    
     address = Customer.objects.filter(user=user)
+        
     cart_items = Cart.objects.filter(user=user)
     amount = 0.0
     shipping_amount = 100.0
