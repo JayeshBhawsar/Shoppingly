@@ -1,0 +1,121 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Check Out{% endblock title %}
+{% block main-content %}
+<div class="container">
+  <div class="row mt-5">
+
+    <div class="col-sm-6">
+      <h4>Order Summary</h4>
+      <hr>
+
+      {% for item in cart_items %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{ item.product.title }}</h5>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p class="fw-bold">Price: {{ item.total_cost }}</p>
+        </div> 
+      </div>
+      {% endfor %}
+
+      <p>Total cost + Rs. 100 = {{ total_amount }} </p>
+      
+      <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque
+        neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+    </div>
+
+
+    <div class="col-sm-4 offset-sm-1">
+      <h4>Select Shipping Address</h4>
+      <hr>
+      <form action="/paymentdone" id="myform">
+
+        {% for ad in address %}        
+        <div class="card">       
+          <div class="card-body">
+            <h4>Name: {{ ad.name }}</h4>
+            <h5 class="text-capitalize">Locality: {{ ad.locality }}</h5>
+            <h5 class="text-capitalize">City: {{ ad.city }}</h5>
+            <h5 class="text-capitalize">State: {{ ad.state }}</h5>
+            <h5 class="text-capitalize">PIN: {{ ad.zipcode }}</h5>
+          </div>
+        </div>
+
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" name="custid" id="custadd{{ forloop.counter }}" value="{{ ad.id }}">
+          <label class="form-check-label fw-bold" for="">Address: {{ forloop.counter }}</label>
+        </div>
+
+        
+        {% endfor %}
+
+        <div class="text-end">
+          {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button> {% endcomment %}
+          
+          <!-- Set up a container element for the button -->
+          <div id="paypal-button-container"></div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock main-content %}
+
+{% block payment-gateway %}
+
+<!-- Include the PayPal JavaScript SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AUxPhvJgJewObvsJZmU3aTzANpnKlG0QEoOnw0Z8BiuuJ8coc0GZpv_rVbWn8G4AYcFDA1Y1qNNUzZwo&currency=USD"></script>
+
+<script>
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{ total_amount }}'
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                document.getElementById("myform").submit();
+
+                // Replace the above to show a success message within this page, e.g.
+                // const element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '';
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+
+{% endblock payment-gateway %}
+
+
+
+
+{% comment %}
+
+Email ID:
+sb-j437zb14588700@personal.example.com
+
+System Generated Password:
+Gdpe-YS9 
+
+{% endcomment %}
