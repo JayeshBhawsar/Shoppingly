@@ -35,7 +35,7 @@
 <!-- Live Sale Section -->
 <div class="container">
   <div class="row bg-danger text-center p-4 text-black border-bottom shadow">
-    <h1>SALE IS NOW OPEN</h1>
+    <h1>SUMMER SALE IS NOW OPEN</h1>
     <span>5% Instant Discount On Axis Bank Credit and Debit Card</span>
     <small class="fw-lighter">Term and Condition Applied (For details visit Bank's official Website)</small>
   </div>
@@ -97,7 +97,7 @@
   <div class="owl-carousel" id="slider1">
     {% for b in bottomwears %}
     <a href="{% url 'product-detail' b.id %}" class="btn">
-      <div class="item"><img src="{{ b.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ b.title }}</span><br><span class="fs-5">{{ b.discounted_price }}</span></div>
+      <div class="item"><img src="{{ b.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ b.title }}</span><br><span class="fs-5">₹ {{ b.discounted_price }}</span></div>
     </a>
     {% comment %} ID: {{ b.id }} {% endcomment %}
     {% endfor %}
@@ -115,7 +115,7 @@
 
     {% for t in topwears %}
     <a href="{% url 'product-detail' t.id %}" class="btn">
-      <div class="item"><img src="{{ t.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ t.title }}</span><br><span class="fs-5">{{ t.discounted_price }}</span></div>
+      <div class="item"><img src="{{ t.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ t.title }}</span><br><span class="fs-5">₹ {{ t.discounted_price }}</span></div>
     </a>
     {% comment %} ID: {{ t.id }} {% endcomment %}
     {% endfor %}
@@ -133,7 +133,7 @@
 
     {% for m in mobiles %}
     <a href="{% url 'product-detail' m.id %}" class="btn">
-      <div class="item"><img src="{{ m.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ m.title }}</span><br><span class="fs-5">{{ m.discounted_price }}</span></div>
+      <div class="item"><img src="{{ m.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ m.title }}</span><br><span class="fs-5">₹ {{ m.discounted_price }}</span></div>
     </a>
     {% comment %} ID: {{ m.id }} {% endcomment %}
     {% endfor %}
@@ -151,7 +151,7 @@
 
     {% for l in laptops %}
     <a href="{% url 'product-detail' l.id %}" class="btn">
-      <div class="item"><img src="{{ l.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ l.title }}</span><br><span class="fs-5">{{ l.discounted_price }}</span></div>
+      <div class="item"><img src="{{ l.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ l.title }}</span><br><span class="fs-5">₹ {{ l.discounted_price }}</span></div>
     </a>
     {% comment %} ID: {{ m.id }} {% endcomment %}
     {% endfor %}
@@ -170,7 +170,7 @@
 
     {% for bb in books %}
       <a href="{% url 'product-detail' bb.id %}" class="btn">
-        <div class="item"><img src="{{ bb.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ bb.title }}</span><br><span class="fs-5">{{ bb.discounted_price }}</span></div>
+        <div class="item"><img src="{{ bb.product_image.url }}" alt="" height="200px"><span class="fw-bold">{{ bb.title }}</span><br><span class="fs-5">₹ {{ bb.discounted_price }}</span></div>
       </a>
       {% comment %} ID: {{ b.id }} {% endcomment %}
     {% endfor %}
