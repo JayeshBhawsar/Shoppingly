@@ -77,7 +77,6 @@ class ProductDetailView(View):
 
 
 
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
@@ -343,6 +342,8 @@ class CustomerRegistrationView(View):
         if form.is_valid():
             messages.success(request, 'Congratulations!! Registered Successfully.')
             form.save()
+            
+            return redirect('login')
             
         context = {'form': form}
         return render(request, 'app/customerregistration.html', context)

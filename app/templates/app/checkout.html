@@ -50,19 +50,11 @@
         {% endfor %}
 
 
-
-
-        {% comment %} != requset.user.address  {% endcomment %}
-
         {% if not address %}   
           <button><a href="{% url 'profile' %}">Add Address First</a></button>
           <br><br>
-        
         {% else %}
-
-          <div class="text-end">
-            {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button> {% endcomment %}
-            
+          <div class="text-end">            
             <!-- Set up a container element for the button -->
             <div id="paypal-button-container"></div>
           </div>
