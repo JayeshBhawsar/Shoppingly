@@ -30,31 +30,31 @@ class ProductView(View):
             return render(request, 'app/home.html', context)
         
     
-    def post(self, request):
-        if request.method == 'POST':
-            all = request.POST.get('search')
-            # print(all)
+    # def post(self, request):
+    #     if request.method == 'POST':
+    #         all = request.POST.get('search')
+    #         # print(all)
 
-        topwears = Product.objects.filter(category='TW')
-        bottomwears = Product.objects.filter(category='BW')
-        mobiles = Product.objects.filter(category='M')
-        laptops = Product.objects.filter(category='L')
-        books = Product.objects.filter(category='B')
+    #     topwears = Product.objects.filter(category='TW')
+    #     bottomwears = Product.objects.filter(category='BW')
+    #     mobiles = Product.objects.filter(category='M')
+    #     laptops = Product.objects.filter(category='L')
+    #     books = Product.objects.filter(category='B')
         
-        if all:
-            topwears = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='TW'))
-            bottomwears = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='BW'))
-            mobiles = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='M'))
-            laptops = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='L'))
-            books = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all))   & Q(category='B'))
+    #     if all:
+    #         topwears = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='TW'))
+    #         bottomwears = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='BW'))
+    #         mobiles = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='M'))
+    #         laptops = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='L'))
+    #         books = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all))   & Q(category='B'))
                    
             
-        total_items = 0
-        if request.user.is_authenticated:
-            total_items = len(Cart.objects.filter(user=request.user))
+    #     total_items = 0
+    #     if request.user.is_authenticated:
+    #         total_items = len(Cart.objects.filter(user=request.user))
 
-        context = {'topwears': topwears, 'bottomwears': bottomwears, 'mobiles': mobiles, 'laptops': laptops, 'books': books, 'total_items': total_items}
-        return render(request, 'app/home.html', context)
+    #     context = {'topwears': topwears, 'bottomwears': bottomwears, 'mobiles': mobiles, 'laptops': laptops, 'books': books, 'total_items': total_items}
+    #     return render(request, 'app/home.html', context)
         
 
 
