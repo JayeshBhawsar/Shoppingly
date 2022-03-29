@@ -117,10 +117,10 @@ WSGI_APPLICATION = 'Shopping.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd1kat7utohajfc', 
-        'USER': 'ittbldhdibqsgt', 
-        'PASSWORD': 'a97f90836adb229ef4d1744b21a85c811cdbe23d2f7f07a3258cd797c575e509',
-        'HOST': 'ec2-54-160-109-68.compute-1.amazonaws.com', 
+        'NAME': 'dbe2g4bpauhv0v', 
+        'USER': 'khlvugrfqdbbax', 
+        'PASSWORD': 'cf839974ba279fbdf69250c8285f8f07db0f4fc02cd58dbe1b4e63513aaddddc',
+        'HOST': 'ec2-52-54-212-232.compute-1.amazonaws.com', 
         'PORT': '5432',
     }
 }
