@@ -32,8 +32,8 @@ class ProductView(View):
         
     
     def post(self, request):
-        if request.method == 'GET':
-            all = request.GET.get('search')
+        if request.method == 'POST':
+            all = request.POST.get('search')
             # print(all)
     
     
