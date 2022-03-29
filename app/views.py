@@ -9,25 +9,79 @@ from .models import Customer, Product, Cart, OrderPlaced
 
 from django.contrib.auth.decorators import login_required
 
+
+
+from django.db.models import Q
 # def home(request):
 #  return render(request, 'app/home.html')
 class ProductView(View):
-    def get(self, request):       
+    def get(self, request):
+        # all = request.GET.get('search')
+        # if all:
+        #     topwears = Product.objects.filter(Q(title__icontains=all) | Q(content__icontains=all) & Q(category='TW'))
+        #     bottomwears = Product.objects.filter(Q(title__icontains=all) | Q(content__icontains=all) & Q(category='BW'))
+        #     mobiles = Product.objects.filter(Q(title__icontains=all) | Q(content__icontains=all) & Q(category='M'))
+        #     laptops = Product.objects.filter(Q(title__icontains=all) | Q(content__icontains=all) & Q(category='L'))
+        #     books = Product.objects.filter(Q(title__icontains=all) | Q(content__icontains=all) & Q(category='B'))
+        # else:                    
         topwears = Product.objects.filter(category='TW')
         bottomwears = Product.objects.filter(category='BW')
         mobiles = Product.objects.filter(category='M')
         laptops = Product.objects.filter(category='L')
         books = Product.objects.filter(category='B')
+        
 
         total_items = 0
         if request.user.is_authenticated:
-
             total_items = len(Cart.objects.filter(user=request.user))
 
-        context = {'topwears': topwears, 'bottomwears': bottomwears, 'mobiles': mobiles, 'laptops': laptops, 'books': books,'total_items': total_items}
+            context = {'topwears': topwears, 'bottomwears': bottomwears, 'mobiles': mobiles, 'laptops': laptops, 'books': books, 'total_items': total_items}
+            return render(request, 'app/home.html', context)
+        
+    def post(self, request):
+        if request.method == 'POST':
+            all = request.POST.get('search')
+            # print(all)
+
+        topwears = Product.objects.filter(category='TW')
+        bottomwears = Product.objects.filter(category='BW')
+        mobiles = Product.objects.filter(category='M')
+        laptops = Product.objects.filter(category='L')
+        books = Product.objects.filter(category='B')
+        
+        if all:
+            topwears = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='TW'))
+            bottomwears = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='BW'))
+            mobiles = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='M'))
+            laptops = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all)) & Q(category='L'))
+            books = Product.objects.filter(Q(Q(title__icontains=all) | Q(description__icontains=all) | Q(brand__icontains=all))   & Q(category='B'))
+                   
+            
+        total_items = 0
+        if request.user.is_authenticated:
+            total_items = len(Cart.objects.filter(user=request.user))
+
+        context = {'topwears': topwears, 'bottomwears': bottomwears, 'mobiles': mobiles, 'laptops': laptops, 'books': books, 'total_items': total_items}
         return render(request, 'app/home.html', context)
+        
+        
+            
 
-
+# def search(request):
+#     if request.method == "POST":
+#         searched = request.POST['searched']
+#         # blogs = BlogPost.objects.filter(title__contains=searched)
+#         topwears = Product.objects.filter(category='TW')
+#         bottomwears = Product.objects.filter(category='BW')
+#         mobiles = Product.objects.filter(category='M')
+#         laptops = Product.objects.filter(category='L')
+#         books = Product.objects.filter(category='B')
+        
+        
+        
+#         return render(request, "search.html", {'searched': searched, 'blogs': blogs})
+#     else:
+#         return render(request, "search.html", {})
 
 # def product_detail(request):
 #  return render(request, 'app/productdetail.html')
