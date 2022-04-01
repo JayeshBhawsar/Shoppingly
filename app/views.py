@@ -3,6 +3,7 @@ from unicodedata import category
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
+# from html5lib import serialize
 from matplotlib.style import context
 from numpy import product
 from .models import Customer, Product, Cart, OrderPlaced
@@ -21,7 +22,7 @@ class ProductView(View):
         mobiles = Product.objects.filter(category='M')
         laptops = Product.objects.filter(category='L')
         books = Product.objects.filter(category='B')
-        print(books)
+        # print(books)
         
         total_items = 0
         if request.user.is_authenticated:
@@ -479,6 +480,58 @@ def orders(request):
     context = {'order_placed': order_placed}    
     return render(request, 'app/orders.html', context)
 
+# rest-framework code #
+########################################################################################################
+
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .models import Customer
+from .serializers import CustomerSerializer
+
+@csrf_exempt
+def customer_json_list(request):
+    if request.method == 'GET':
+        customers = Customer.objects.all()
+        serializer = CustomerSerializer(customers, many=True)
+        
+        return JsonResponse(serializer.data, safe=False)
+    
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = CustomerSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            
+            return JsonResponse(serializer.data, status=201)
+        
+        return JsonResponse(serializer.errors, status=400)
+    
 
 
-
+@csrf_exempt
+def customer_json_detail(request, id):
+    try:
+        customer = Customer.objects.get(id=id)
+    except Customer.DoesNotExist:
+        return HttpResponse(status=404)
+    
+    
+    if request.method == 'GET':
+        serializer = CustomerSerializer(customer)
+        return JsonResponse(serializer.data)
+    
+    if request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = CustomerSerializer(customer, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            
+            return JsonResponse(serializer.data)
+        
+        return JsonResponse(serializer.errors, status=400)
+    
+    if request.method == 'DELETE':
+        customer.delete()
+        return HttpResponse(status=204)

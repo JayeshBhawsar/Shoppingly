@@ -105,5 +105,11 @@ urlpatterns = [
     path('buy/', views.buy_now, name='buy-now'),
     
     path('orders/', views.orders, name='orders'),
+    
+    
+    # REST-API 
+    path('customer_api/customers/', views.customer_json_list),
+    
+    path('customer_api/customers/<int:id>/', views.customer_json_detail),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

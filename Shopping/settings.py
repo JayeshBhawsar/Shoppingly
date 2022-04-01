@@ -47,9 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'app',
+    
 
     'admin_interface',  
     'colorfield', 
+    'rest_framework',
     
 ]
 
@@ -117,10 +119,10 @@ WSGI_APPLICATION = 'Shopping.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbe2g4bpauhv0v', 
-        'USER': 'khlvugrfqdbbax', 
-        'PASSWORD': 'cf839974ba279fbdf69250c8285f8f07db0f4fc02cd58dbe1b4e63513aaddddc',
-        'HOST': 'ec2-52-54-212-232.compute-1.amazonaws.com', 
+        'NAME': 'd7qr92mj6nkrmo', 
+        'USER': 'atpmbdrsmmrdmy', 
+        'PASSWORD': '7b214aba420899d3a2de3bf2bd9bcbaa98431f6eae4e090ba670938345003fa0',
+        'HOST': 'ec2-3-229-252-6.compute-1.amazonaws.com', 
         'PORT': '5432',
     }
 }
@@ -205,3 +207,10 @@ LOGIN_REDIRECT_URL = '/profile/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # SESSION_ENGINE = "django-contrib-sessions.backends.db"
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+}
