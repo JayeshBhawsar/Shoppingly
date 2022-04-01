@@ -480,8 +480,19 @@ def orders(request):
     context = {'order_placed': order_placed}    
     return render(request, 'app/orders.html', context)
 
-# rest-framework code #
-########################################################################################################
+
+
+
+
+
+
+
+
+
+
+####################################################################################
+################################## REST-FRAMEWORK CODE #############################
+####################################################################################
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
