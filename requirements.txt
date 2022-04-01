@@ -15,7 +15,7 @@ django-rest-framework==0.1.0
 djangorestframework==3.13.1
 fonttools==4.30.0
 gunicorn==20.1.0
-heroku==0.1.4
+# heroku==0.1.4
 idna==3.3
 importlib-metadata==4.11.3
 jsonschema==4.4.0
